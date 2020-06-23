@@ -569,7 +569,7 @@ def quaternion_yaw(q: Quaternion) -> float:
     return yaw
 
 
-def create_nuscenes_infos(root_path, version="v1.0-trainval", nsweeps=10, filter_zero=True):
+def create_nuscenes_infos(root_path, save_path, version="v1.0-trainval", nsweeps=10, filter_zero=True):
     nusc = NuScenes(version=version, dataroot=root_path, verbose=True)
     available_vers = ["v1.0-trainval", "v1.0-test", "v1.0-mini"]
     assert version in available_vers
@@ -587,7 +587,7 @@ def create_nuscenes_infos(root_path, version="v1.0-trainval", nsweeps=10, filter
     else:
         raise ValueError("unknown")
     test = "test" in version
-    root_path = Path(root_path)
+    save_path = Path(save_path)
     # filter exist scenes. you may only download part of dataset.
     available_scenes = _get_available_scenes(nusc)
     available_scene_names = [s["name"] for s in available_scenes]
@@ -614,7 +614,7 @@ def create_nuscenes_infos(root_path, version="v1.0-trainval", nsweeps=10, filter
     if test:
         print(f"test sample: {len(train_nusc_infos)}")
         with open(
-            root_path / "infos_test_{:02d}sweeps_withvelo.pkl".format(nsweeps), "wb"
+            save_path / "infos_test_{:02d}sweeps_withvelo.pkl".format(nsweeps), "wb"
         ) as f:
             pickle.dump(train_nusc_infos, f)
     else:
@@ -622,11 +622,11 @@ def create_nuscenes_infos(root_path, version="v1.0-trainval", nsweeps=10, filter
             f"train sample: {len(train_nusc_infos)}, val sample: {len(val_nusc_infos)}"
         )
         with open(
-            root_path / "infos_train_{:02d}sweeps_withvelo_filter_{}.pkl".format(nsweeps, filter_zero), "wb"
+            save_path / "infos_train_{:02d}sweeps_withvelo_filter_{}.pkl".format(nsweeps, filter_zero), "wb"
         ) as f:
             pickle.dump(train_nusc_infos, f)
         with open(
-            root_path / "infos_val_{:02d}sweeps_withvelo_filter_{}.pkl".format(nsweeps, filter_zero), "wb"
+            save_path / "infos_val_{:02d}sweeps_withvelo_filter_{}.pkl".format(nsweeps, filter_zero), "wb"
         ) as f:
             pickle.dump(val_nusc_infos, f)
 
