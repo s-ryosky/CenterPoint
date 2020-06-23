@@ -112,3 +112,5 @@ train.sh
 
 docker/run*.sh
 work_dirs/
+demo/
+*.avi
