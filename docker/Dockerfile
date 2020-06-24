@@ -105,7 +105,7 @@ RUN pip install \
         pybind11==2.4.3 \
         pyquaternion==0.9.5 \
         pytest-runner==5.2 \
-        requests \
+        requests==2.24.0 \
         seaborn==0.9.0 \
         shapely==1.6.4.post2 \
         terminaltables==3.1.0 \
@@ -160,10 +160,7 @@ RUN cd ./apex && \
 # ==================================================================
 # nuScenes devkit
 # ------------------------------------------------------------------
-RUN git clone --depth 99 https://github.com/s-ryosky/nuscenes.git
-RUN cd ./nuscenes && \
-    python setup.py install && \
-    cd ..
+RUN git clone https://github.com/tianweiy/nuscenes-devkit
 # ==================================================================
 # numba
 # ------------------------------------------------------------------
