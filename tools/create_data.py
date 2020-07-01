@@ -16,7 +16,7 @@ def nuscenes_data_prep(root_path, version, nsweeps=10, filter_zero=True, save_pa
         "NUSC",
         root_path,
         Path(save_path) / "infos_train_{:02d}sweeps_withvelo_filter_{}.pkl".format(nsweeps, filter_zero),
-        db_path=Path(save_path) / f"gt_database_{nsweeps}sweeps_withvelo",
+        db_path=Path(root_path) / f"gt_database_{nsweeps}sweeps_withvelo_centerpoint",
         dbinfo_path=Path(save_path) / f"dbinfos_train_{nsweeps}sweeps_withvelo.pkl",
         nsweeps=nsweeps,
     )
