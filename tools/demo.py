@@ -102,11 +102,13 @@ def main():
     
     for i in range(len(points_list)):
         visual(points_list[i], gt_annos[i], detections[i], i)
+        print("Rendered Image {}".format(i))
     
     image_folder = 'demo'
     video_name = 'video.avi'
 
     images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
+    images.sort()
     frame = cv2.imread(os.path.join(image_folder, images[0]))
     height, width, layers = frame.shape
 

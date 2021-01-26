@@ -1,8 +1,8 @@
 # ------------------------------------------------------------------------------
 # Portions of this code are from
-# det3d (https://github.com/poodarchu/det3d)
+# det3d (https://github.com/poodarchu/Det3D/tree/56402d4761a5b73acd23080f537599b0888cce07)
 # Copyright (c) 2019 朱本金
-# Licensed under the Apache License
+# Licensed under the MIT License
 # ------------------------------------------------------------------------------
 
 import logging
@@ -110,12 +110,16 @@ def _get_pos_neg_loss(cls_loss, labels):
         cls_neg_loss = cls_loss[..., 0].sum() / batch_size
     return cls_pos_loss, cls_neg_loss
 
+def limit_period(val, offset=0.5, period=np.pi):
+    return val - torch.floor(val / period + offset) * period
 
 def get_direction_target(anchors, reg_targets, one_hot=True, dir_offset=0.0):
     batch_size = reg_targets.shape[0]
     anchors = anchors.view(batch_size, -1, anchors.shape[-1])
     rot_gt = reg_targets[..., -1] + anchors[..., -1]
-    dir_cls_targets = ((rot_gt - dir_offset) > 0).long()
+    #dir_cls_targets = ((rot_gt - dir_offset) > 0).long()
+    dir_cls_targets = (limit_period(rot_gt - dir_offset, 0.5, np.pi*2) >
+                       0).long()
     if one_hot:
         dir_cls_targets = one_hot_f(dir_cls_targets, 2, dtype=anchors.dtype)
     return dir_cls_targets
@@ -1217,7 +1221,7 @@ class CenterHead(nn.Module):
         
         self.no_log = no_log
 
-        self.box_n_dim = 9  # change this if your box is different
+        self.box_n_dim = 9 if dataset == 'nuscenes' else 7  # change this if your box is different
         self.num_anchor_per_locs = [n for n in num_classes]
         self.use_direction_classifier = False 
 
@@ -1294,6 +1298,9 @@ class CenterHead(nn.Module):
             if self.dataset == 'nuscenes':
                 preds_dict['anno_box'] = torch.cat((preds_dict['reg'], preds_dict['height'], preds_dict['dim'],
                                                     preds_dict['vel'], preds_dict['rot']), dim=1)
+            elif self.dataset == 'waymo':
+                preds_dict['anno_box'] = torch.cat((preds_dict['reg'], preds_dict['height'], preds_dict['dim'],
+                                                    preds_dict['rot']), dim=1)                  
             else:
                 raise NotImplementedError()
 

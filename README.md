@@ -17,6 +17,10 @@
       year={2020},
     }
 
+## Updates
+
+[2020-08-10] **NEW:** We now support vehicle detection on [Waymo](docs/WAYMO.md) with SOTA performance. Please stay tuned for more updates in the fall. 
+
 ## Contact
 Any questions or discussion are welcome! 
 
@@ -58,6 +62,10 @@ Three-dimensional objects are commonly represented as 3D boxes in a point-cloud.
 
 All results are tested on a Titan Xp GPU with batch size 1. More models and details can be found in [MODEL_ZOO.md](docs/MODEL_ZOO.md).
 
+## Third-party resources
+
+- [AFDet](https://arxiv.org/abs/2006.12671): another work inspired by CenterNet achieves good performance on KITTI/Waymo dataset. 
+
 ## Use CenterPoint
 
 We provide a demo with PointPillars model for 3D object detection on the nuScenes dataset. 
@@ -95,7 +103,7 @@ Please refer to [GETTING_START](docs/GETTING_START.md) to prepare the data. Then
 
 ## License
 
-CenterPoint is release under MIT license (see [LICENSE](LICENSE)). It is developed based on a forked version of [det3d](https://github.com/poodarchu/det3d). We also incorperate a large amount of code from [CenterNet](https://github.com/xingyizhou/CenterNet)
+CenterPoint is release under MIT license (see [LICENSE](LICENSE)). It is developed based on a forked version of [det3d](https://github.com/poodarchu/Det3D/tree/56402d4761a5b73acd23080f537599b0888cce07). We also incorperate a large amount of code from [CenterNet](https://github.com/xingyizhou/CenterNet)
 and [CenterTrack](https://github.com/xingyizhou/CenterTrack). See the [NOTICE](docs/NOTICE) for details. Note that the nuScenes dataset is free of charge for non-commercial activities. Please contact the [nuScenes team](https://www.nuscenes.org) for commercial usage. 
 
 ## Acknowlegement
